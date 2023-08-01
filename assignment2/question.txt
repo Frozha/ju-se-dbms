@@ -31,7 +31,7 @@ Note: Only first character of Name and job will be in uppercase.
 11. In which year did most people join the company? Display the year and number of  employees. 
 
 12. Show the every alternate row in employee table. 
-
+    
 13. Display the total salary of all employees. Total salary = salary + commission.  
 
 14. Display the department name and available jobs in that department.  
