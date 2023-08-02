@@ -62,4 +62,6 @@
     from (select distinct dept.dname dname ,emp.job job from emp, dept where dept.deptno = emp.deptno order by dept.dname) 
     group by dname;
 
-15.select distinct dept.dname, emp.ename from emp, dept where emp.deptno=dept.deptno order by dept.dname;
+15.select dname, listagg(ename, ', ') within group (order by dname) employees 
+    from (select distinct dept.dname dname, emp.ename ename from emp, dept where emp.deptno=dept.deptno order by dept.dname) 
+    group by dname;
