@@ -8,7 +8,7 @@ CREATE TABLE students (
 
 CREATE TABLE courses (
   course_id NUMBER(2) NOT NULL,
-  course_name VARCHAR(255) NOT NULL,
+  course_name VARCHAR(255),
   max_strength INT NOT NULL,
   PRIMARY KEY (course_id)
 );
@@ -18,7 +18,7 @@ CREATE TABLE subjects (
   subject_id NUMBER(3) NOT NULL,
   subject_name VARCHAR(255) NOT NULL,
   PRIMARY KEY (course_id,subject_id),
-  FOREIGN KEY (course_id) REFERENCES courses(course_id)
+  FOREIGN KEY (course_id) REFERENCES courses(course_id) ON DELETE CASCADE
 );
 
 CREATE TABLE enrollments (
@@ -26,8 +26,8 @@ CREATE TABLE enrollments (
   student_id NUMBER(10) NOT NULL,
   course_id NUMBER(3) NOT NULL,
   PRIMARY KEY (enrl_id),
-  FOREIGN KEY (student_id) REFERENCES students (student_id),
-  FOREIGN KEY (course_id) REFERENCES courses (course_id)
+  FOREIGN KEY (student_id) REFERENCES students (student_id) ON DELETE CASCADE,
+  FOREIGN KEY (course_id) REFERENCES courses (course_id) ON DELETE CASCADE
 );
 
 CREATE TABLE enrollment_subjects (
@@ -35,8 +35,8 @@ CREATE TABLE enrollment_subjects (
   course_id NUMBER(3) NOT NULL,
   subject_id NUMBER(3) NOT NULL,
   PRIMARY KEY (enrl_id, subject_id),
-  FOREIGN KEY (enrl_id) REFERENCES enrollments (enrl_id),
-  FOREIGN KEY (course_id,subject_id) REFERENCES subjects (course_id,subject_id)
+  FOREIGN KEY (enrl_id) REFERENCES enrollments (enrl_id) ON DELETE CASCADE,
+  FOREIGN KEY (course_id,subject_id) REFERENCES subjects (course_id,subject_id) ON DELETE CASCADE
 );
 
 CREATE TABLE grades (
@@ -45,8 +45,8 @@ CREATE TABLE grades (
   subject_id NUMBER(3) NOT NULL,
   subject_marks NUMBER(4,1) NOT NULL,
   PRIMARY KEY (enrl_id, semester,subject_id),
-  FOREIGN KEY (enrl_id) REFERENCES enrollments (enrl_id),
-  FOREIGN KEY (enrl_id, subject_id) REFERENCES enrollment_subjects(enrl_id, subject_id)
+  FOREIGN KEY (enrl_id) REFERENCES enrollments (enrl_id) ON DELETE CASCADE,
+  FOREIGN KEY (enrl_id, subject_id) REFERENCES enrollment_subjects(enrl_id, subject_id) ON DELETE CASCADE
 );
 
 ALTER TABLE enrollments ADD enroll_date DATE;
